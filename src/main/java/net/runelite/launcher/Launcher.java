@@ -337,6 +337,10 @@ public class Launcher
 
 	private static boolean checkVersion(Bootstrap bootstrap)
 	{
+		if(bootstrap.getMinimumLauncherVersion() == null || PROPERTIES.getVersion() == null)
+		{
+			return true;
+		}
 		Semver minimum = new Semver(bootstrap.getMinimumLauncherVersion()).withClearedSuffixAndBuild();
 		Semver ours = new Semver(PROPERTIES.getVersion()).withClearedSuffixAndBuild();
 		return !ours.isLowerThan(minimum);

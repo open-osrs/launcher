@@ -36,4 +36,6 @@ public class Bootstrap
 	private String[] launcherWindowsArguments;
 	private String[] launcherMacArguments;
 	private String[] launcherArguments;
+
+	private String minimumLauncherVersion;
 }

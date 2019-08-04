@@ -67,6 +67,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.launcher.beans.Artifact;
 import net.runelite.launcher.beans.Bootstrap;
 import org.slf4j.LoggerFactory;
+import javax.swing.JOptionPane;
+import java.awt.*;
+import java.net.URISyntaxException;
+import java.net.URI;
+import com.vdurmont.semver4j.Semver;
 
 @Slf4j
 public class Launcher
@@ -77,12 +82,12 @@ public class Launcher
 	private static final String CLIENT_BOOTSTRAP_URL = "https://raw.githubusercontent.com/runelite-extended/maven-repo/master/bootstrap.json";
 	private static final String CLIENT_BOOTSTRAP_STAGING_URL = "https://raw.githubusercontent.com/runelite-extended/maven-repo/master/bootstrap-staging.json";
 	private static final String CLIENT_BOOTSTRAP_SHA256_URL = "https://static.runelite.net/bootstrap.json.sha256";
+	private static final String RUNELITEPLUS_WEBSITE = "https://runelitepl.us/";
 	private static final LauncherProperties PROPERTIES = new LauncherProperties();
 	private static final String USER_AGENT = "RuneLite/" + PROPERTIES.getVersion();
 	private static final boolean enforceDependencyHashing = true;
-	private static final boolean staging = false;
+	private static boolean staging = false;
 	private static final File CRASH_FILES = new File(LOGS_DIR, "jvm_crash_pid_%p.log");
-
 	static final String CLIENT_MAIN_CLASS = "net.runelite.client.RuneLite";
 
 	public static void main(String[] args)
@@ -91,6 +96,7 @@ public class Launcher
 		parser.accepts("clientargs").withRequiredArg();
 		parser.accepts("nojvm");
 		parser.accepts("debug");
+		parser.accepts("staging");
 
 		HardwareAccelerationMode defaultMode;
 		switch (OS.getOs())
@@ -114,6 +120,8 @@ public class Launcher
 			.defaultsTo(defaultMode);
 
 		OptionSet options = parser.parse(args);
+
+		staging = options.has("staging");
 
 		LOGS_DIR.mkdirs();
 
@@ -176,6 +184,30 @@ public class Launcher
 			log.error("error fetching bootstrap", ex);
 			frame.setVisible(false);
 			frame.dispose();
+			System.exit(-1);
+			return;
+		}
+
+		if (!checkVersion(bootstrap))
+		{
+			log.error("launcher version too low");
+			frame.setVisible(false);
+			frame.dispose();
+			JOptionPane.showMessageDialog(null, "Launcher is outdated!\n" +
+					"Go to " + RUNELITEPLUS_WEBSITE + " to\n" +
+					"get the new version",
+				"RuneLitePlus", JOptionPane.ERROR_MESSAGE);
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				try
+				{
+					Desktop.getDesktop().browse(new URI(RUNELITEPLUS_WEBSITE));
+				}
+				catch (IOException | URISyntaxException e)
+				{
+					log.error("failed to open web browser");
+					e.printStackTrace();
+				}
+			}
 			System.exit(-1);
 			return;
 		}
@@ -301,6 +333,13 @@ public class Launcher
 		return !Strings.isNullOrEmpty(clientArgs)
 			? new ArrayList<>(Splitter.on(' ').omitEmptyStrings().trimResults().splitToList(clientArgs))
 			: new ArrayList<>();
+	}
+
+	private static boolean checkVersion(Bootstrap bootstrap)
+	{
+		Semver minimum = new Semver(bootstrap.getMinimumLauncherVersion()).withClearedSuffixAndBuild();
+		Semver ours = new Semver(PROPERTIES.getVersion()).withClearedSuffixAndBuild();
+		return !ours.isLowerThan(minimum);
 	}
 
 	private static void download(LauncherFrame frame, Bootstrap bootstrap) throws IOException

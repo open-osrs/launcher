@@ -116,7 +116,7 @@ class MessagePanel extends JPanel
 		stableBtn = addButton("Stable", "The Stable option isn't the most up-to-date build, it will use the most stable OpenOSRS build.");
 		buttonPanel.add(stableBtn);
 
-		nightlyBtn = addButton("Nightly", "The Nightly option is the most up-to-date build, it will use the latest OpenOSRS build as of 00:00 each night.");
+		nightlyBtn = addButton("Nightly", "The Nightly option is the most up-to-date build, it will use the latest OpenOSRS build which is built each night.");
 		buttonPanel.add(nightlyBtn);
 
 		bootstrapChannel.setVisible(false);

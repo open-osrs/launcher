@@ -91,6 +91,7 @@ public class Launcher
 		parser.accepts("debug");
 		parser.accepts("nightly");
 		parser.accepts("staging");
+		parser.accepts("stable");
 
 		HardwareAccelerationMode defaultMode;
 		switch (OS.getOs())
@@ -116,7 +117,7 @@ public class Launcher
 		OptionSet options = parser.parse(args);
 
 		nightly = options.has("nightly");
-		staging = options.has("staging");
+		staging = options.has("staging") || options.has("stable");
 
 		LOGS_DIR.mkdirs();
 

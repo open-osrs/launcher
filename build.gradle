@@ -21,7 +21,7 @@ repositories {
     }
 
     maven {
-        url = 'https://raw.githubusercontent.com/open-osts/maven-repo/master'
+        url = 'https://raw.githubusercontent.com/open-osrs/maven-repo/master'
     }
 }
 

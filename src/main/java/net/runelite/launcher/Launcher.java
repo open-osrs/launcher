@@ -80,6 +80,7 @@ public class Launcher
 	private final static String NIGHTLY_DISABLED_URL = "https://raw.githubusercontent.com/open-osrs/hosting/master/nighlty.disable";
 	private static boolean nightly = false;
 	private static boolean staging = false;
+	private static boolean stable = false;
 
 	static final String CLIENT_MAIN_CLASS = "net.runelite.client.RuneLite";
 
@@ -117,7 +118,8 @@ public class Launcher
 		OptionSet options = parser.parse(args);
 
 		nightly = options.has("nightly");
-		staging = options.has("staging") || options.has("stable");
+		staging = options.has("staging");
+		stable = options.has("stable");
 
 		LOGS_DIR.mkdirs();
 
@@ -128,7 +130,7 @@ public class Launcher
 			logger.setLevel(Level.DEBUG);
 		}
 
-		if (!nightly && !staging)
+		if (!nightly && !staging && !stable)
 		{
 			OpenOSRSSplashScreen.init(null);
 			OpenOSRSSplashScreen.barMessage(null);
@@ -138,6 +140,7 @@ public class Launcher
 			if (buttons != null)
 			{
 				buttons.get(0).addActionListener(e -> {
+					stable = true;
 					OpenOSRSSplashScreen.close();
 					Runnable task = () -> launch(mode, options);
 					Thread thread = new Thread(task);

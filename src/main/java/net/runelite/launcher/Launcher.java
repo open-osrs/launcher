@@ -166,7 +166,7 @@ public class Launcher
 	{
 		try
 		{
-			OpenOSRSSplashScreen.init(nightly ? "Nightly" : "Stable");
+			OpenOSRSSplashScreen.init(nightly ? "Nightly" : stable ? "Stable" : "Staging");
 			OpenOSRSSplashScreen.stage(0, "Setting up environment");
 
 			log.info("OpenOSRS Launcher version {}", LauncherProperties.getVersion());
@@ -398,14 +398,22 @@ public class Launcher
 
 	private static Bootstrap getBootstrap() throws IOException
 	{
-		URL u = new URL(CLIENT_BOOTSTRAP_STABLE_URL);
-		if (nightly)
+		URL u;
+		if (stable)
+		{
+			u = new URL(CLIENT_BOOTSTRAP_STABLE_URL);
+		}
+		else if (nightly)
 		{
 			u = new URL(CLIENT_BOOTSTRAP_NIGHTLY_URL);
 		}
-		if (staging)
+		else if (staging)
 		{
 			u = new URL(CLIENT_BOOTSTRAP_STAGING_URL);
+		}
+		else
+		{
+			throw new RuntimeException("How did we get here?");
 		}
 
 		log.info(String.valueOf(u));

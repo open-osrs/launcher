@@ -81,6 +81,10 @@ public class Launcher
 	private static boolean nightly = false;
 	private static boolean staging = false;
 	private static boolean stable = false;
+	private static String proxyIP;
+	private static Integer proxyPort;
+	private static String proxyUsername;
+	private static String proxyPassword;
 
 	static final String CLIENT_MAIN_CLASS = "net.runelite.client.RuneLite";
 
@@ -108,6 +112,8 @@ public class Launcher
 		parser.accepts("nightly");
 		parser.accepts("staging");
 		parser.accepts("stable");
+		parser.accepts("proxy").withRequiredArg();
+		final ArgumentAcceptingOptionSpec<String> proxyInfo = parser.accepts("proxy").withRequiredArg().ofType(String.class);
 
 		HardwareAccelerationMode defaultMode;
 
@@ -163,6 +169,23 @@ public class Launcher
 		if (options.has("debug"))
 		{
 			logger.setLevel(Level.DEBUG);
+		}
+
+		if (options.has("proxy"))
+		{
+			String[] proxy = options.valueOf(proxyInfo).split(":");
+
+			if (proxy.length >= 2)
+			{
+				proxyIP = proxy[0];
+				proxyPort = Integer.valueOf(proxy[1]);
+			}
+
+			if (proxy.length >= 4)
+			{
+				proxyUsername = proxy[2];
+				proxyPassword = proxy[3];
+			}
 		}
 
 		if (!nightly && !staging && !stable)
@@ -334,7 +357,20 @@ public class Launcher
 				clientArgs.add("--debug");
 			}
 
-			if (Boolean.parseBoolean(prop.getProperty("openosrs.useProxy")))
+			if (proxyIP != null && proxyPort != null)
+			{
+				if (proxyUsername != null && proxyPassword != null)
+				{
+					clientArgs.add("--proxy");
+					clientArgs.add(proxyIP + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword);
+				}
+				else
+				{
+					clientArgs.add("--proxy");
+					clientArgs.add(proxyIP + ":" + proxyPort);
+				}
+			}
+			else if (Boolean.parseBoolean(prop.getProperty("openosrs.useProxy")))
 			{
 				clientArgs.add("--proxy " + prop.getProperty("openosrs.proxyDetails"));
 			}

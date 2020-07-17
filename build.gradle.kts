@@ -9,7 +9,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.github.ben-manes:gradle-versions-plugin:0.28.0")
+        classpath("com.github.ben-manes:gradle-versions-plugin:0.29.0")
     }
 }
 

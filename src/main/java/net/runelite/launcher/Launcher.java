@@ -74,13 +74,12 @@ public class Launcher
 	private static final File CRASH_FILES = new File(LOGS_DIR, "jvm_crash_pid_%p.log");
 	static final String LAUNCHER_BUILD = "https://raw.githubusercontent.com/open-osrs/launcher/master/build.gradle.kts";
 	private static final String CLIENT_BOOTSTRAP_STAGING_URL = "https://raw.githubusercontent.com/open-osrs/hosting/master/bootstrap-staging.json";
-	private static final String CLIENT_BOOTSTRAP_STABLE_URL = "https://raw.githubusercontent.com/open-osrs/hosting/master/bootstrap-stable.json";
-	private static final String CLIENT_BOOTSTRAP_NIGHTLY_URL = "https://raw.githubusercontent.com/open-osrs/hosting/master/bootstrap-nightly.json";
+	private static final String CLIENT_BOOTSTRAP_STABLE_URL = "https://raw.githubusercontent.com/open-osrs/hosting/master/bootstrap-openosrs.json";
 	static final String USER_AGENT = "OpenOSRS/" + LauncherProperties.getVersion();
 	private static final boolean enforceDependencyHashing = true;
 	private static boolean nightly = false;
 	private static boolean staging = false;
-	private static boolean stable = false;
+	private static boolean stable = true;
 
 	static final String CLIENT_MAIN_CLASS = "net.runelite.client.RuneLite";
 
@@ -154,7 +153,6 @@ public class Launcher
 
 		nightly |= options.has("nightly");
 		staging = options.has("staging");
-		stable |= options.has("stable");
 
 		LOGS_DIR.mkdirs();
 
@@ -406,17 +404,13 @@ public class Launcher
 	private static Bootstrap getBootstrap() throws IOException
 	{
 		URL u;
-		if (stable)
-		{
-			u = new URL(CLIENT_BOOTSTRAP_STABLE_URL);
-		}
-		else if (nightly)
-		{
-			u = new URL(CLIENT_BOOTSTRAP_NIGHTLY_URL);
-		}
-		else if (staging)
+		if (staging)
 		{
 			u = new URL(CLIENT_BOOTSTRAP_STAGING_URL);
+		}
+		else if (stable)
+		{
+			u = new URL(CLIENT_BOOTSTRAP_STABLE_URL);
 		}
 		else
 		{
@@ -489,6 +483,12 @@ public class Launcher
 			File dest = new File(REPO_DIR, artifact.getName());
 
 			log.debug("Downloading {}", artifact.getName());
+
+			//Lazy fix, sue me
+			if (artifact.getPath().contains("archive-patch"))
+			{
+				artifact.setPath(artifact.getPath().replace("https://repo.maven.apache.org/maven2/", "https://jcenter.bintray.com/"));
+			}
 
 			URL url = new URL(artifact.getPath());
 			URLConnection conn = url.openConnection();

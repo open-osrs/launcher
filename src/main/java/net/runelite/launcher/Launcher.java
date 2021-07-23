@@ -69,8 +69,8 @@ import org.slf4j.LoggerFactory;
 public class Launcher
 {
 	private static final File RUNELITE_DIR = new File(System.getProperty("user.home"), ".runelite");
-	private static final File LOGS_DIR = new File(RUNELITE_DIR, "logs");
-	private static final File REPO_DIR = new File(RUNELITE_DIR, "repository2");
+	private static final File LOGS_DIR = new File(OPENOSRS_DIR, "logs");
+	private static final File REPO_DIR = new File(OPENOSRS_DIR, "repository2");
 	private static final File CRASH_FILES = new File(LOGS_DIR, "jvm_crash_pid_%p.log");
 	static final String LAUNCHER_BUILD = "https://raw.githubusercontent.com/open-osrs/launcher/master/build.gradle.kts";
 	private static final String CLIENT_BOOTSTRAP_STAGING_URL = "https://raw.githubusercontent.com/open-osrs/hosting/master/bootstrap-staging.json";

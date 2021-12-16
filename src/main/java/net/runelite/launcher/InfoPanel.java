@@ -61,7 +61,7 @@ class InfoPanel extends JPanel
 
 	private static final BufferedImage TRANSPARENT_LOGO = ImageUtil.getResourceStreamFromClass(InfoPanel.class, "openosrs.png");
 	static final Dimension PANEL_SIZE = new Dimension(200, OpenOSRSSplashScreen.FRAME_SIZE.height);
-	private static final File RUNELITE_DIR = new File(System.getProperty("user.home"), ".runelite");
+	private static final File RUNELITE_DIR = new File(System.getProperty("user.home"), ".openosrs");
 	private static final File LOGS_DIR = new File(RUNELITE_DIR, "logs");
 
 	private static final Dimension VERSION_SIZE = new Dimension(PANEL_SIZE.width, 25);

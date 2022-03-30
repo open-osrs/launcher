@@ -3,6 +3,7 @@ AppName=OpenOSRS Launcher
 AppPublisher=OpenOSRS
 UninstallDisplayName=OpenOSRS
 AppVersion=@project.version@
+VersionInfoVersion=@project.version@
 AppSupportURL=https://openosrs.com/
 DefaultDirName={localappdata}\OpenOSRS
 ; vcredist queues files to be replaced at next reboot, however it doesn't seem to matter

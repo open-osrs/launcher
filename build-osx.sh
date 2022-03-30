@@ -4,7 +4,7 @@ set -e
 
 JDK_VER="11.0.8"
 JDK_BUILD="10"
-PACKR_VERSION="runelite-1.0"
+PACKR_VERSION="runelite-1.4"
 
 SIGNING_IDENTITY="Developer ID Application"
 ALTOOL_USER="user@icloud.com"
@@ -14,9 +14,6 @@ if ! [ -f OpenJDK11U-jre_x64_mac_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz ] ; then
     curl -Lo OpenJDK11U-jre_x64_mac_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz \
         https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-${JDK_VER}%2B${JDK_BUILD}/OpenJDK11U-jre_x64_mac_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz
 fi
-
-rm -f packr.jar
-curl -o packr.jar https://libgdx.badlogicgames.com/ci/packr/packr.jar
 
 echo "b0cd349e7e428721a3bcfec619e071d25c0397e3e43b7ce22acfd7d834a8ca4b  OpenJDK11U-jre_x64_mac_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz" | shasum -c
 
@@ -42,7 +39,7 @@ echo "f51577b005a51331b822a18122ce08fca58cf6fee91f071d5a16354815bbe1e3  packr_${
 
 java -jar packr_${PACKR_VERSION}.jar \
     --platform \
-    mac \
+    mac64 \
     --icon \
     packr/openosrs.icns \
     --jdk \
@@ -73,7 +70,7 @@ codesign -f -s "${SIGNING_IDENTITY}" --entitlements osx/signing.entitlements --o
 
 # create-dmg exits with an error code due to no code signing, but is still okay
 # note we use Adam-/create-dmg as upstream does not support UDBZ
-create-dmg --format UDBZ native-osx/OpenOSRS.app.app native-osx/ || true
+create-dmg --format UDBZ native-osx/OpenOSRS.app native-osx/ || true
 
 mv native-osx/OpenOSRS\ *.dmg native-osx/OpenOSRS.dmg
 

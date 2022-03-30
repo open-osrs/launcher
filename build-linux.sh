@@ -2,9 +2,10 @@
 
 set -e
 
-JDK_VER="11.0.4"
-JDK_BUILD="11"
-PACKR_VERSION="runelite-1.0"
+JDK_VER="11.0.8"
+JDK_BUILD="10"
+PACKR_VERSION="runelite-1.3"
+APPIMAGE_VERSION="12"
 
 # Check if there's a client jar file - If there's no file the AppImage will not work but will still be built.
 if ! [ -e build/libs/OpenOSRS-shaded.jar ]
@@ -21,14 +22,14 @@ fi
 rm -f packr.jar
 curl -o packr.jar https://libgdx.badlogicgames.com/ci/packr/packr.jar
 
-echo "70d2cc675155476f1d8516a7ae6729d44681e4fad5a6fc8dfa65cab36a67b7e0 OpenJDK11U-jre_x64_linux_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz" | sha256sum -c
+echo "98615b1b369509965a612232622d39b5cefe117d6189179cbad4dcef2ee2f4e1 OpenJDK11U-jre_x64_linux_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz" | sha256sum -c
 
 # packr requires a "jdk" and pulls the jre from it - so we have to place it inside
 # the jdk folder at jre/
 if ! [ -d linux-jdk ] ; then
     tar zxf OpenJDK11U-jre_x64_linux_hotspot_${JDK_VER}_${JDK_BUILD}.tar.gz
     mkdir linux-jdk
-    mv jdk-11.0.4+11-jre linux-jdk/jre
+    mv jdk-$JDK_VER+$JDK_BUILD-jre linux-jdk/jre
 fi
 
 if ! [ -f packr_${PACKR_VERSION}.jar ] ; then
@@ -36,7 +37,7 @@ if ! [ -f packr_${PACKR_VERSION}.jar ] ; then
         https://github.com/runelite/packr/releases/download/${PACKR_VERSION}/packr.jar
 fi
 
-echo "18b7cbaab4c3f9ea556f621ca42fbd0dc745a4d11e2a08f496e2c3196580cd53  packr_${PACKR_VERSION}.jar" | sha256sum -c
+echo "f200fb7088dbb5e61e0835fe7b0d7fc1310beda192dacd764927567dcd7c4f0f  packr_${PACKR_VERSION}.jar" | sha256sum -c
 
 java -jar packr_${PACKR_VERSION}.jar \
     --platform \

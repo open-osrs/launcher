@@ -149,7 +149,9 @@ public class Launcher
 			}
 		}
 
+		stable |= options.has("stable");
 		nightly |= options.has("nightly");
+
 
 		LOGS_DIR.mkdirs();
 

@@ -23,7 +23,7 @@ plugins {
 }
 
 group = "com.openosrs"
-version = "2.2.0"
+version = "2.2.1"
 description = "OpenOSRS Launcher"
 
 repositories {

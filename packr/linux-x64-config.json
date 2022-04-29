@@ -14,7 +14,7 @@
     ],
     "output": "native-linux-x86_64/OpenOSRS.AppDir/",
     "resources": [
-      "target/filtered-resources/openosrs.desktop",
+      "build/filtered-resources/openosrs.desktop",
       "appimage/openosrs.png"
     ]
 }

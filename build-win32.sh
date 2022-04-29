@@ -49,4 +49,4 @@ resourcehacker \
     -mask ICONGROUP,MAINICON,
 
 # We use the filtered iss file
-iscc target/filtered-resources/openosrs32.iss
+iscc build/filtered-resources/openosrs32.iss

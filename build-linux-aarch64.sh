@@ -34,7 +34,7 @@ echo "f200fb7088dbb5e61e0835fe7b0d7fc1310beda192dacd764927567dcd7c4f0f  packr_${
 # Note: Host umask may have checked out this directory with g/o permissions blank
 chmod -R u=rwX,go=rX appimage
 # ...ditto for the build process
-chmod 644 target/OpenOSRS.jar
+chmod 644 build/libs/OpenOSRS-shaded.jar
 
 rm -rf native-linux-aarch64
 

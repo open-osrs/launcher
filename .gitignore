@@ -8,24 +8,64 @@ project.properties
 .project
 .settings/
 .classpath
-dependency-reduced-pom.xml
-*.exe
+runelite-client/src/main/resources/META-INF/MANIFEST.MF
+git
+classes/artifacts/client_jar/run.bat
+classes/artifacts/client_jar/client.jar
+*.jar
+!gradle-wrapper.jar
+.live/
+**/build/*
+*/out/
+.gradle/
+runelite-client/src/main/resources/runelite/*
+runelite-client/dependencies.txt
+.staging/
+.vscode
+.factorypath
+hs_err_pid*.log
+/runelite-client/src/main/resources/net/runelite/client/injected-client.oprs
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
 *.tar.gz
-packr.jar
-native-linux/
+*.zip
+packr_*
+osx-aarch64-jdk/
+linux-jdk/
+linux-aarch64-jdk/
+osx-jdk/
+win32-jdk/
+win64-jdk/
+
+native-linux-aarch64/
+native-linux-x86_64/
+native-osx-aarch64/
 native-osx/
 native-win32/
 native-win64/
-osx-jdk/
-linux-jdk/
-win32-jdk
-win64-jdk
-node_modules/
-.gradle
-build
-vcredist_x64.exe
-vcredist_x86.exe
-appimagetool-x86_64.AppImage
-*.dmg
-.DS_Store
-*.zip

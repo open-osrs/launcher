@@ -1,0 +1,16 @@
+{
+  "platform": "windows64",
+  "jdk": "win64-jdk",
+  "executable": "OpenOSRS",
+  "classpath": [
+    "build/libs/OpenOSRS-shaded.jar"
+  ],
+  "mainclass": "net.runelite.launcher.Launcher",
+  "vmargs": [
+    "-Drunelite.launcher.nojvm=true",
+    "-Xmx512m",
+    "-Xss2m",
+    "-XX:CompileThreshold=1500"
+  ],
+  "output": "native-win64"
+}

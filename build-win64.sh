@@ -37,7 +37,7 @@ resourcehacker \
     -open native-win64/OpenOSRS.exe \
     -save native-win64/OpenOSRS.exe \
     -action addoverwrite \
-    -res packr/runelite.manifest \
+    -res packr/openosrs.manifest \
     -mask MANIFEST,1,
 
 # packr on Windows doesn't support icons, so we use resourcehacker to include it
@@ -46,8 +46,8 @@ resourcehacker \
     -open native-win64/OpenOSRS.exe \
     -save native-win64/OpenOSRS.exe \
     -action add \
-    -res runelite.ico \
+    -res openosrs.ico \
     -mask ICONGROUP,MAINICON,
 
 # We use the filtered iss file
-iscc target/filtered-resources/runelite.iss
+iscc target/filtered-resources/openosrs.iss

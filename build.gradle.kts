@@ -1,7 +1,6 @@
 /*
-version = '2.2.0'
+version = '3.0.0'
 */
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {

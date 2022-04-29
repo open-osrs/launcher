@@ -194,9 +194,6 @@ public class Launcher
 		staging = options.has("staging");
 		stable |= options.has("stable");
 
-		// TODO REMOVE
-		staging = true;
-
 		// Setup debug
 		final boolean isDebug = options.has("debug");
 		LOGS_DIR.mkdirs();

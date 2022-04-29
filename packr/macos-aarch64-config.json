@@ -1,0 +1,19 @@
+{
+    "platform": "macaarch64",
+    "icon": "packr/openosrs.icns",
+    "jdk": "osx-aarch64-jdk",
+    "executable": "OpenOSRS",
+    "classpath": [
+        "build/libs/OpenOSRS-shaded.jar"
+    ],
+    "mainclass": "net.runelite.launcher.Launcher",
+    "vmargs": [
+       "-Drunelite.launcher.nojvm=true",
+       "-Xmx512m",
+       "-Xss2m",
+       "-XX:CompileThreshold=1500",
+       "--add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED",
+       "--add-opens=java.desktop/sun.awt=ALL-UNNAMED"
+    ],
+    "output": "native-osx-aarch64/OpenOSRS.app"
+}

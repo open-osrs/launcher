@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
+ * Copyright (c) 2019 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,54 +24,19 @@
  */
 package net.runelite.launcher;
 
-import java.io.File;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Collection;
-import java.util.List;
-import javax.swing.UIManager;
-import lombok.extern.slf4j.Slf4j;
-import static net.runelite.launcher.Launcher.CLIENT_MAIN_CLASS;
+import org.junit.Assert;
+import org.junit.Test;
 
-@Slf4j
-class ReflectionLauncher
+public class VersionTest
 {
-	static void launch(List<File> results, Collection<String> clientArgs) throws MalformedURLException
+	@Test
+	public void testVersionCompare()
 	{
-		URL[] jarUrls = new URL[results.size()];
-		int i = 0;
-		for (File file : results)
-		{
-			log.debug("Adding jar: {}", file);
-			jarUrls[i++] = file.toURI().toURL();
-		}
-
-		ClassLoader parent = ClassLoader.getPlatformClassLoader();
-		URLClassLoader loader = new URLClassLoader(jarUrls, parent);
-
-		UIManager.put("ClassLoader", loader); // hack for Substance
-		Thread thread = new Thread()
-		{
-			public void run()
-			{
-				try
-				{
-					Class<?> mainClass = loader.loadClass(CLIENT_MAIN_CLASS);
-
-					Method main = mainClass.getMethod("main", String[].class);
-					main.invoke(null, (Object) clientArgs.toArray(new String[0]));
-				}
-				catch (Exception ex)
-				{
-					log.error("Unable to launch client", ex);
-				}
-			}
-		};
-		thread.setName("OpenOSRS");
-		thread.start();
-
-		OpenOSRSSplashScreen.close();
+		Assert.assertTrue(Launcher.compareVersion("1.2.3-SNAPSHOT", "1.2.3") > 0);
+		Assert.assertTrue(Launcher.compareVersion("1.2.3", "1.2.3") == 0);
+		Assert.assertTrue(Launcher.compareVersion("1.2.3", "1.2") > 0);
+		Assert.assertTrue(Launcher.compareVersion("2.2.3", "1.2.3") > 0);
+		Assert.assertTrue(Launcher.compareVersion("1.2.3", "1.2.3.1") < 0);
+		Assert.assertTrue(Launcher.compareVersion("1.2.3-SNAPSHOT", "1.2.3.1") < 0);
 	}
 }

@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2018, Tomas Slusny <slusnucky@gmail.com>
+ * Copyright (c) 2021, Adam <Adam@sigterm.info>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice, this
- *	list of conditions and the following disclaimer.
+ *    list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
- *	this list of conditions and the following disclaimer in the documentation
- *	and/or other materials provided with the distribution.
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -22,41 +22,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.launcher;
+package net.runelite.launcher.beans;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
 
-@Slf4j
-public class LauncherProperties
+@Data
+public class Platform
 {
-	private static final String LAUNCHER_VERSION = "launcher.version";
-
-	private static final Properties properties = new Properties();
-
-	static
-	{
-		final InputStream in = LauncherProperties.class.getResourceAsStream("launcher.properties");
-
-		try
-		{
-			properties.load(in);
-		}
-		catch (IOException ex)
-		{
-			log.warn("Unable to load properties", ex);
-		}
-	}
-
-	static String getVersionKey()
-	{
-		return LAUNCHER_VERSION;
-	}
-
-	static String getVersion()
-	{
-		return properties.getProperty(LAUNCHER_VERSION);
-	}
+	private String name;
+	private String arch;
 }

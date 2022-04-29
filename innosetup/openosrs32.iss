@@ -47,7 +47,7 @@ Filename: "{app}\OpenOSRS.exe"; Description: "&Open OpenOSRS"; Flags: postinstal
 Type: filesandordirs; Name: "{app}"
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{%USERPROFILE}\.runelite\repository2"
+Type: filesandordirs; Name: "{%USERPROFILE}\.openosrs\repository2"
 
 ; Code to check if installing the redistributables is necessary - https://stackoverflow.com/a/11172939/7189686
 [Code]

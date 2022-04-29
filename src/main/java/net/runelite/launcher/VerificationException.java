@@ -24,14 +24,14 @@
  */
 package net.runelite.launcher;
 
-class VerificationException extends Exception
+public class VerificationException extends Exception
 {
-	VerificationException(String message)
+	public VerificationException(String message)
 	{
 		super(message);
 	}
 
-	VerificationException(String message, Throwable cause)
+	public VerificationException(String message, Throwable cause)
 	{
 		super(message, cause);
 	}

@@ -383,7 +383,7 @@ public class Launcher
 			if (!checkVersion(bootstrap))
 			{
 				log.error("launcher version too low");
-				OpenOSRSSplashScreen.setError("Your launcher is outdated!", "The launcher you're using is oudated. Please either download a newer version from openosrs.com or by clicking the update button on the right hand side.");
+				OpenOSRSSplashScreen.setError("Your launcher is outdated!", "The launcher you're using is outdated. Please either download a newer version from openosrs.com or by clicking the update button on the right hand side.");
 				return;
 			}
 
